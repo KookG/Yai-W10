@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WebSocket - Custom events</title>
+	<style>
+		/* ========== CSS ตกแต่ง layout ========== */
+		.flex-row {
+			display: flex;
+			padding: 5px;
+			flex-direction: row;   /* จัดเรียงแนวนอน */
+			justify-content: left;
+			border-radius: 5px;
+		}
+		.flex-col {
+			display: flex;
+			padding: 5px;
+			flex-direction: column; /* จัดเรียงแนวตั้ง */
+			justify-content: left;
+			border-radius: 5px;
+		}
+		.flex-item {
+			margin: 3px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+		}
+		.message {
+			margin-bottom: 3px;
+			padding: 10px;
+			border: 1px solid #eee;
+			border-radius: 5px;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+		}
+	</style>
+
+	<!--
+		เชื่อมโยง JavaScript ที่จะทำงานฝั่ง client
+		custom.js จะ handle connect/disconnect, เลือก event, และแสดงผล
+	-->
+	<script type="module" src="{{ url_for('static', filename='custom.js') }}"></script>
+</head>
+<body>
+	<h1>WebSocket - Custom events</h1>
+
+	<!-- แถวแรก: ปุ่ม connect / เลือก event / ส่งข้อความ / disconnect -->
+	<div class="flex-row">
+		<!-- ปุ่มเชื่อมต่อไปยัง server -->
+		<div class="flex-item" style="flex: 1;">
+			<button type="button" id="connect">เชื่อมต่อ Server</button>
+		</div>
+
+		<!-- ส่วนเลือกประเภท event + กรอกข้อความ + ปุ่มส่ง -->
+		<div class="flex-item" style="flex: 1;">
+			<!-- dropdown เลือกว่าจะส่ง event แบบไหน -->
+			<select id="event">
+				<option value="message" selected>message</option>
+				<option value="custom_event1">custom_event1</option>
+				<option value="custom_event2">custom_event2</option>
+				<option value="custom_event3">custom_event3</option>
+			</select>
+			<!-- input ข้อความ + ปุ่มส่ง + ตัวเลือกสี -->
+			<input type="text" id="message" placeholder="กรุณากรอกข้อความ">
+			<button type="button" id="send">ส่งข้อความ</button>
+			<input type="color" id="color" value="#000000">
+		</div>
+
+		<!-- ปุ่มตัดการเชื่อมต่อ -->
+		<div class="flex-item" style="flex: 1;">
+			<button type="button" id="disconnect">ตัดการเชื่อมต่อ Server</button>
+		</div>
+	</div>
+
+	<!-- แถวสอง: แสดงผล event message + custom_event1 -->
+	<div class="flex-row">
+		<div class="flex-item" style="flex: 1;">
+			<h3>ข้อความที่ได้รับจากเหตุการณ์ message</h3>
+			<!-- กล่องข้อความสำหรับ event message -->
+			<div id="messages" class="flex-col" style="height: 200px; overflow-y: scroll; background-color: #ff9b9b;">
+				<!-- ข้อความที่ได้รับจาก Server จะถูกเติมที่นี่ -->
+			</div>
+		</div>
+		<div class="flex-item" style="flex: 1;">
+			<h3>ข้อความที่ได้รับจากเหตุการณ์ custom_event1</h3>
+			<!-- กล่องข้อความสำหรับ event custom_event1 -->
+			<div id="custom_event1" class="flex-col" style="height: 200px; overflow-y: scroll; background-color: #aeffbd;">
+				<!-- ข้อความที่ได้รับจาก Server จะถูกเติมที่นี่ -->
+			</div>
+		</div>
+	</div>
+
+	<!-- แถวสาม: แสดงผล event custom_event2 + custom_event3 -->
+	<div class="flex-row">
+		<div class="flex-item" style="flex: 1;">
+			<h3>ข้อความที่ได้รับจากเหตุการณ์ custom_event2</h3>
+			<!-- กล่องข้อความสำหรับ event custom_event2 -->
+			<div id="custom_event2" class="flex-col" style="height: 200px; overflow-y: scroll; background-color: #9b9eff;">
+				<!-- ข้อความที่ได้รับจาก Server จะถูกเติมที่นี่ -->
+			</div>
+		</div>
+		<div class="flex-item" style="flex: 1;">
+			<h3>ข้อความที่ได้รับจากเหตุการณ์ custom_event3</h3>
+			<!-- กล่องข้อความสำหรับ event custom_event3 -->
+			<div id="custom_event3" class="flex-col" style="height: 200px; overflow-y: scroll; background-color: #f6ffae;">
+				<!-- ข้อความที่ได้รับจาก Server จะถูกเติมที่นี่ -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WebSocket - Basic WebSocket</title>
+	<style>
+		/* ========== CSS ส่วนตกแต่ง ========== */
+		/* กำหนด layout แบบ flex: แนวนอน */
+		.flex-row {
+			display: flex;
+			flex-direction: row;
+			justify-content: left;
+		}
+		/* กำหนด layout แบบ flex: แนวตั้ง */
+		.flex-col {
+			display: flex;
+			flex-direction: column;
+			justify-content: left;
+		}
+		/* กล่องย่อย (item) ของ flex */
+		.flex-item {
+			margin: 3px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+		}
+		/* ใช้แสดงข้อความ */
+		.message {
+			margin-bottom: 3px;
+			padding: 10px;
+			border: 1px solid #eee;
+			border-radius: 5px;
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+		}
+	</style>
+
+	<!--
+		เชื่อมโยง JavaScript ฝั่ง client
+		ไฟล์ basic.js อยู่ในโฟลเดอร์ static
+		ใช้ module script เพื่อ import ฟังก์ชันจาก socket.io
+	-->
+	<script type="module" src="{{ url_for('static', filename='basic.js') }}"></script>
+</head>
+<body>
+	<h1>WebSocket - Basic send & receive</h1>
+
+	<!-- แถวแรก: ปุ่มเชื่อมต่อ, ช่องกรอกข้อความ + ปุ่มส่ง, ปุ่มตัดการเชื่อมต่อ -->
+	<div class="flex-row">
+		<!-- ปุ่มเชื่อมต่อไปยัง server -->
+		<div class="flex-item" style="flex: 1;">
+			<button type="button" id="connect">เชื่อมต่อ Server</button>
+		</div>
+
+		<!-- กรอกข้อความ + เลือกสี + ปุ่มส่งข้อความ -->
+		<div class="flex-item" style="flex: 1;">
+			<input type="text" id="message" placeholder="กรุณากรอกข้อความ">
+			<button type="button" id="send">ส่งข้อความ</button>
+			<!-- color picker เลือกสีข้อความ -->
+			<input type="color" id="color" value="#000000">
+		</div>
+
+		<!-- ปุ่มตัดการเชื่อมต่อ -->
+		<div class="flex-item" style="flex: 1;">
+			<button type="button" id="disconnect">ตัดการเชื่อมต่อ Server</button>
+		</div>
+	</div>
+
+	<!-- แถวที่สอง: กล่องแสดงข้อความที่ได้จาก server -->
+	<div class="flex-row">
+		<div class="flex-item" style="flex: 1;">
+			<h3>ข้อความที่ได้รับจาก Server</h3>
+			<!-- ส่วนนี้เอาไว้โชว์ข้อความที่ server ส่งมา
+				 ใช้ overflow-y: scroll เพื่อให้เลื่อนดูข้อความเก่าได้ -->
+			<div id="messages" class="flex-col" style="height: 300px; overflow-y: scroll;">
+				<!-- ข้อความที่ได้รับจาก Server จะแสดงที่นี่ (DOM สร้าง <div> แทรกเพิ่ม) -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>
