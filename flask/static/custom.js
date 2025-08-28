@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const colorPicker = document.getElementById("color");
 
 	// สร้าง socket object (ยังไม่เชื่อมต่อจนกว่าจะกด connect)
+	const host = "http://https://3551e0d5a3c1.ngrok-free.app/";
 	const socket = io("http://localhost:5000", { autoConnect: false });
 
 	// ===== ฟังก์ชันปรับ UI ตามสถานะการเชื่อมต่อ =====
@@ -54,16 +55,38 @@ document.addEventListener("DOMContentLoaded", function() {
 	socket.on("message", (data) => {
 		console.log("Received message:", data);
 		// TODO:
+		const div = document.createElement("div");
+		div.style.color = data.color;
+		div.innerText = data.Message;
+		messagesDiv.insertBefore(div, messagesDiv.firstChild);
 	});
 
-	// event custom_event1
+	// event custom_event1 :ปลายทางส่งมาที่ event1
 	// TODO:
+	socket.on("event1", (data)=>{
+		const div = document.createElement("div");
+		div.style.color = data.color;
+		div.innerText = data.message;
+		custom_event1Div.insertBefore(div, custom_event1Div.firstChild);
+	});
 
 	// event custom_event2
 	// TODO:
+	socket.on("event2", (data)=>{
+		const div = document.createElement("div");
+		div.style.color = data.color;
+		div.innerText = data.message;
+		custom_event2Div.insertBefore(div, custom_event2Div.firstChild);
+	});
 
 	// event custom_event3
 	// TODO:
+	socket.on("event3", (data)=>{
+		const div = document.createElement("div");
+		div.style.color = data.color;
+		div.innerText = data.message;
+		custom_event3Div.insertBefore(div, custom_event3Div.firstChild);
+	});
 
 	// ====== UI Events ======
 	// ปุ่ม connect → เชื่อม socket

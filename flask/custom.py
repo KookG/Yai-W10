@@ -49,12 +49,21 @@ def handle_disconnect():
 # ===== Custom events =====
 # custom_event1: client ต้องใช้ socket.emit("custom_event1", {...})
 # TODO:
+@socketio.on("custom_event1")
+def custom_event1(data):
+	socketio.emit("event1", data)
 
 # custom_event2: client ต้องใช้ socket.emit("custom_event2", {...})
 # TODO:
+@socketio.on("custom_event2")
+def custom_event1(data):
+	socketio.emit("event2", data)
 
 # custom_event3: client ต้องใช้ socket.emit("custom_event3", {...})
 # TODO:
+@socketio.on("custom_event3")
+def custom_event1(data):
+	socketio.emit("event3", data)
 
 # ===== Route ปกติของ Flask =====
 @app.route('/')

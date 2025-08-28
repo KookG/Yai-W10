@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// สร้าง socket object (autoConnect=false = ยังไม่เชื่อมต่อจนกว่าจะกดปุ่ม connect)
 	// TODO:
-	
+	const socket = io("http://https://3551e0d5a3c1.ngrok-free.app/", { autoConnect: false });
+
 
 	// ฟังก์ชันปรับ UI ตามสถานะการเชื่อมต่อ
 	function UIUpdate(isConnected = false) {
@@ -34,12 +35,31 @@ document.addEventListener("DOMContentLoaded", function() {
 	// ====== Socket Events ======
 	// เมื่อเชื่อมต่อสำเร็จ "connect"
 	// TODO:
+	socket.on("connect", () => {
+		UIUpdate(true); // ปรับ UI เป็น connected
+		const msg = document.createElement("div");
+		msg.innerHTML = `<em>Connected to server</em>`;
+		messagesDiv.appendChild(msg);
+	});
 
 	// เมื่อถูกตัดการเชื่อมต่อ "disconnect"
 	// TODO:
+	socket.on("disconnect", () => {
+		UIUpdate(false); // ปรับ UI เป็น disconnected
+		const msg = document.createElement("div");
+		msg.innerHTML = `<em>Disconnected from server</em>`;
+		messagesDiv.appendChild(msg);
+	});
 
 	// เมื่อได้รับข้อความจาก server (event "message" เป็นค่า default ของ socket.send())
 	// TODO:
+	socket.on("message", (data)=>{
+		console.log(data);
+		const div = document.createElement("div")
+		div.style.color = data.color; // css style
+		div.innerText = data.message;
+		messagesDiv.appendChild(div);
+	});
 
 	// ====== UI Events ======
 	// เมื่อกดปุ่ม connect → สั่งเชื่อม socket

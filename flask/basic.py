@@ -23,12 +23,21 @@ socketio = SocketIO(
 # ====== Built-in Events ======
 # connect: เรียกเมื่อ client เชื่อมต่อสำเร็จ
 # TODO:
+@socketio.on('connect')
+def handle_connect():
+	print("Client connected")
 
 # message: เรียกเมื่อ client ใช้ socket.send() (built-in event "message")
 # TODO:
+@socketio.on("message")
+def handle_message(data):   # data ถ้า frontend ส่ง json มา จะเป็น dict ให้เลย
+	socketio.send(data) 
 
 # disconnect: เรียกเมื่อ client ตัดการเชื่อมต่อ
 # TODO:
+@socketio.on('disconnect')
+def handle_disconnect():
+	print("Client disconnected")
 
 # ====== Flask route ปกติ ======
 @app.route('/')
